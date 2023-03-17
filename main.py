@@ -16,4 +16,8 @@ for i in prices:
             day = 0
     days.append(day)
 
-print(days)
+for i in range(len(days)):
+    if i == len(days) - 1:
+        print(days[i], end="")
+    else:
+        print(days[i], end=" ")
