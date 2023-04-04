@@ -1,29 +1,70 @@
-# Variables declaration and created input to get the data
-prices = input().split()
-days = []
-index = 0
+#Implementación de los nodos
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
-# Loop that compares each item with the next items until find a bigger price
-
-for i in prices:
-# Local variables for the loop, index will allow only search after each list item, convert each item in integer to make the comparations, set the days counter to zero for each item
-    index += 1
-    price = int(i)
-    day = 0
-# Count how many days musto to wait to find a better price, if there is no a better price set day to zero
-    for j in range(len(prices) - index):
-        if price >= int(prices[index + j]):
-            day += 1
+#Implementación de la lista enlazada
+class linkedList:
+    
+    def __init__(self):
+        self.head = None
+        self.tail = None
+    
+    def pushback(self, data):
+        newNode = Node(data)
+        if self.head == None:
+            self.head = newNode
+            self.tail = newNode
         else:
+            self.tail.next = newNode
+            self.tail = newNode
+
+    def popback(self):
+        if self.tail is None:
+            print("ERROR: Empty list")
+        else:
+            current_node = self.head
+            while current_node.next.next:
+                current_node = current_node.next
+            temp = current_node.data
+            current_node.next = None
+            self.tail = current_node
+            return temp
+
+
+    def print(self):
+        if self.head is None:
+            print("ERROR: Empty list")
+        else:
+            current_node = self.head
+            while current_node is not None:
+                if current_node.next is None:
+                    print(current_node.data, end="")
+                else:
+                    print(current_node.data, end=" ")
+                current_node = current_node.next
+
+inputs = input().split()
+values = linkedList()
+days = linkedList()
+
+for i in inputs:
+    values.pushback(int(i))
+
+while values.head:
+    day = 0
+    temp = values.head.next
+    while temp:
+        if values.head.data < temp.data:
             day += 1
             break
-        if j == (len(prices) - index - 1):
+        else:
+            day += 1
+        if temp.next is None:
             day = 0
-    days.append(day)
+        temp = temp.next
+    days.pushback(day)
+    values.head = values.head.next
 
-# Print the array output without the brackets or the commas.
-for i in range(len(days)):
-    if i == len(days) - 1:
-        print(days[i], end="")
-    else:
-        print(days[i], end=" ")
+days.print()
